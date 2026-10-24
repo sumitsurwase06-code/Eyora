@@ -1,0 +1,257 @@
+.story-page {
+  background-color: var(--color-dark-brown);
+  min-height: 100vh;
+  padding-top: var(--header-height);
+}
+
+/* Hero */
+.story-hero {
+  position: relative;
+  background: radial-gradient(circle at 70% 40%, #3d251d 0%, #291B17 65%, #180e0b 100%);
+  padding: clamp(4.5rem, 8vw, 7.5rem) 0 clamp(3.5rem, 6vw, 5.5rem);
+  border-bottom: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.story-hero-glow {
+  position: absolute;
+  top: 10%;
+  right: 15%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(217, 145, 75, 0.18) 0%, transparent 65%);
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.story-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 5.5vw, 4.6rem);
+  color: var(--color-champagne);
+  margin: 0.75rem 0 1.25rem;
+  line-height: 1.08;
+}
+
+.story-hero-lead {
+  max-width: 680px;
+  font-size: clamp(1.05rem, 1.2vw, 1.2rem);
+  color: var(--color-text-soft);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+/* Chapter 1 */
+.story-chapter {
+  padding: clamp(5rem, 8vw, 8rem) 0;
+}
+
+.chapter-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: center;
+}
+
+.chapter-text-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.chapter-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+  color: var(--color-champagne);
+  margin-top: 0.5rem;
+}
+
+.chapter-text-col p {
+  margin-bottom: 1.25rem;
+  font-size: 0.98rem;
+  line-height: 1.8;
+}
+
+.chapter-media-col {
+  position: relative;
+}
+
+.chapter-img-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3.5;
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(12, 6, 4, 0.6);
+}
+
+.chapter-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chapter-img-tag {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  padding: 0.35rem 0.75rem;
+  background: rgba(35, 22, 18, 0.9);
+  border: 1px solid var(--color-border);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  color: var(--color-amber);
+  font-weight: 600;
+}
+
+/* 52-Step Method */
+.story-method-section {
+  background: var(--color-surface-dark);
+  padding: clamp(5rem, 8vw, 8.5rem) 0;
+  border-top: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.method-header {
+  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+  max-width: 640px;
+}
+
+.method-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4.2vw, 3.6rem);
+  color: var(--color-champagne);
+  margin: 0.5rem 0 1rem;
+}
+
+.method-desc {
+  font-size: 1rem;
+  color: var(--color-text-soft);
+  line-height: 1.7;
+}
+
+.steps-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+.step-card {
+  padding: 2.2rem 1.8rem;
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.step-card:hover {
+  border-color: var(--color-champagne);
+  transform: translateY(-4px);
+}
+
+.step-num {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  color: var(--color-amber);
+  line-height: 1;
+  margin-bottom: 1.25rem;
+}
+
+.step-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--color-champagne);
+  margin-bottom: 0.65rem;
+}
+
+.step-desc {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
+
+/* Salons */
+.story-salons-section {
+  padding: clamp(5rem, 8vw, 8rem) 0 7rem;
+}
+
+.salons-header {
+  margin-bottom: clamp(3rem, 5vw, 4rem);
+  max-width: 620px;
+}
+
+.salons-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+  color: var(--color-champagne);
+  margin: 0.5rem 0 0.75rem;
+}
+
+.salons-desc {
+  font-size: 0.95rem;
+  color: var(--color-text-soft);
+}
+
+.salons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+}
+
+.salon-card {
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.salon-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+}
+
+.salon-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.salon-card:hover .salon-img-wrap img {
+  transform: scale(1.04);
+}
+
+.salon-info {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.salon-tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  color: var(--color-amber);
+  font-weight: 600;
+}
+
+.salon-name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--color-champagne);
+}
+
+.salon-detail {
+  font-size: 0.88rem;
+  color: var(--color-text-soft);
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 900px) {
+  .chapter-grid, .salons-grid {
+    grid-template-columns: 1fr;
+  }
+}

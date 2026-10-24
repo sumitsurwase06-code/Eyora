@@ -1,0 +1,626 @@
+.hero-section {
+  position: relative;
+  min-height: clamp(680px, 92vh, 980px);
+  background-color: var(--color-dark-brown);
+  background: radial-gradient(circle at 75% 45%, #3c241c 0%, #291B17 55%, #1c110d 100%);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: calc(var(--header-height) + 1.5rem);
+  padding-bottom: 4rem;
+}
+
+/* ==========================================================================
+   1. CINEMATIC VIDEO BACKDROP & READABILITY OVERLAYS
+   ========================================================================== */
+.hero-video-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-video-element {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  opacity: 0;
+  transform: scale(1.03);
+  filter: saturate(1.15) brightness(0.92) contrast(1.08);
+  transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 8s ease-out;
+}
+
+.hero-video-element.is-visible {
+  opacity: 0.52;
+  transform: scale(1);
+}
+
+/* Static Poster Fallback (active while video buffers, on error, or reduced motion) */
+.hero-video-poster-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center 35%;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  filter: saturate(1.1) brightness(0.85);
+}
+
+.hero-video-poster-fallback.is-active {
+  opacity: 0.48;
+}
+
+/* Deep Espresso & Chiaroscuro Overlays for Text Legibility */
+.hero-espresso-overlay {
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(90deg, 
+      rgba(28, 16, 12, 0.94) 0%, 
+      rgba(35, 21, 16, 0.88) 36%, 
+      rgba(41, 27, 23, 0.65) 65%, 
+      rgba(24, 13, 10, 0.82) 100%
+    ),
+    linear-gradient(180deg, 
+      rgba(25, 14, 11, 0.55) 0%, 
+      transparent 35%, 
+      rgba(25, 14, 11, 0.88) 100%
+    );
+  mix-blend-mode: normal;
+}
+
+.hero-amber-light-sweep {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 40%, rgba(217, 145, 75, 0.26) 0%, rgba(185, 111, 63, 0.12) 45%, transparent 70%);
+  mix-blend-mode: screen;
+}
+
+/* ==========================================================================
+   2. AMBIENT GLOWS & EDITORIAL GRID LINES
+   ========================================================================== */
+.hero-glow-layer {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hero-glow-primary {
+  width: 65vw;
+  height: 65vw;
+  right: 5%;
+  top: 15%;
+  background: radial-gradient(circle, rgba(217, 145, 75, 0.22) 0%, rgba(185, 111, 63, 0.08) 45%, transparent 70%);
+  filter: blur(60px);
+}
+
+.hero-glow-secondary {
+  width: 40vw;
+  height: 40vw;
+  left: 0;
+  bottom: 0;
+  background: radial-gradient(circle, rgba(128, 88, 61, 0.18) 0%, transparent 65%);
+  filter: blur(50px);
+}
+
+.hero-grid-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+}
+
+.grid-line {
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(233, 201, 154, 0.03) 0%, rgba(233, 201, 154, 0.12) 40%, rgba(233, 201, 154, 0.02) 100%);
+}
+
+.line-center {
+  margin-left: auto;
+  margin-right: 42%;
+}
+
+/* ==========================================================================
+   3. LAYOUT & COORDINATED FADE-IN
+   ========================================================================== */
+.hero-container {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+}
+
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  align-items: center;
+  gap: clamp(2.5rem, 5vw, 6rem);
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-content.media-loading {
+  opacity: 0.95;
+}
+
+.hero-content.media-ready {
+  opacity: 1;
+}
+
+.hero-eyebrow-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.hero-edition-marker {
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  color: var(--color-muted);
+  font-weight: 500;
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--color-border-subtle);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6.2vw, 6.4rem);
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--color-champagne);
+  display: flex;
+  flex-direction: column;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+}
+
+.hero-title-italic {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--color-warm-white);
+  letter-spacing: 0.02em;
+}
+
+.hero-separator {
+  width: 72px;
+  height: 1px;
+  background-color: var(--color-amber);
+  margin: 1.75rem 0 1.5rem;
+  opacity: 0.85;
+}
+
+.hero-description {
+  max-width: 520px;
+  font-size: clamp(1rem, 1.15vw, 1.125rem);
+  color: var(--color-text-soft);
+  line-height: 1.75;
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 3.5rem;
+}
+
+.hero-btn-main {
+  min-width: 250px;
+}
+
+.hero-btn-sub {
+  min-width: 200px;
+}
+
+/* Hero Craft Notes */
+.hero-craft-notes {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.craft-note-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.craft-icon {
+  color: var(--color-amber);
+  flex-shrink: 0;
+}
+
+.craft-note-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.craft-note-title {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--color-champagne);
+  font-weight: 600;
+}
+
+.craft-note-desc {
+  font-size: 0.72rem;
+  color: var(--color-muted);
+}
+
+.craft-note-divider {
+  width: 1px;
+  height: 32px;
+  background-color: var(--color-border-subtle);
+}
+
+/* ==========================================================================
+   4. RIGHT VISUAL COMPOSITION & PHOTOGRAPHY
+   ========================================================================== */
+.hero-visual-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-visual-ambient-circle {
+  position: absolute;
+  width: 110%;
+  height: 110%;
+  background: radial-gradient(circle, rgba(217, 145, 75, 0.28) 0%, rgba(185, 111, 63, 0.12) 50%, transparent 75%);
+  filter: blur(40px);
+  z-index: 1;
+}
+
+.hero-image-frame {
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+  aspect-ratio: 16/11;
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(12, 7, 5, 0.65), 0 0 40px rgba(217, 145, 75, 0.15);
+  z-index: 2;
+  background-color: var(--color-surface-dark);
+}
+
+.hero-campaign-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  transform: scale(1.02);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-image-frame:hover .hero-campaign-image {
+  transform: scale(1.06);
+}
+
+.hero-image-overlay-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 60% 40%, transparent 45%, rgba(25, 14, 11, 0.7) 100%);
+  pointer-events: none;
+}
+
+.hero-image-overlay-amber {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(217, 145, 75, 0.12) 0%, transparent 60%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Floating Badge */
+.hero-floating-badge {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  right: 1.25rem;
+  background: rgba(35, 22, 18, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-border);
+  padding: 1.1rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  z-index: 4;
+}
+
+.floating-badge-tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.24em;
+  color: var(--color-amber);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.floating-badge-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--color-champagne);
+  font-weight: 400;
+}
+
+.floating-badge-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: var(--color-ivory);
+  opacity: 0.85;
+  margin-top: 0.25rem;
+  transition: var(--transition-fast);
+}
+
+.floating-badge-link:hover {
+  color: var(--color-amber);
+  opacity: 1;
+}
+
+/* Frame Corner Accents */
+.hero-frame-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--color-champagne);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.hero-frame-corner.top-left {
+  top: 8px;
+  left: 8px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+
+.hero-frame-corner.top-right {
+  top: 8px;
+  right: 8px;
+  border-top: 2px solid;
+  border-right: 2px solid;
+}
+
+.hero-frame-corner.bottom-left {
+  bottom: 8px;
+  left: 8px;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+}
+
+.hero-frame-corner.bottom-right {
+  bottom: 8px;
+  right: 8px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+
+/* Coordinates Marker */
+.hero-coords-marker {
+  position: absolute;
+  top: -2.2rem;
+  right: 0;
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--color-muted);
+  font-family: monospace;
+}
+
+/* ==========================================================================
+   5. AMBIENT CINEMATIC CONTROLS
+   ========================================================================== */
+.hero-cinematic-controls {
+  position: absolute;
+  bottom: 2.5rem;
+  right: clamp(1.5rem, 4vw, 4rem);
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: rgba(35, 22, 18, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--color-border);
+  padding: 0.5rem 0.9rem;
+  z-index: 10;
+  box-shadow: 0 10px 25px rgba(12, 6, 4, 0.5);
+}
+
+.cinematic-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: var(--color-champagne);
+  font-weight: 500;
+  padding-right: 0.75rem;
+  border-right: 1px solid var(--color-border-subtle);
+}
+
+.tag-icon {
+  color: var(--color-amber);
+}
+
+.controls-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cinematic-ctrl-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(233, 201, 154, 0.08);
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-ivory);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.cinematic-ctrl-btn:hover {
+  background: rgba(217, 145, 75, 0.25);
+  border-color: var(--color-amber);
+  color: var(--color-champagne);
+}
+
+/* ==========================================================================
+   6. SCROLL INDICATOR
+   ========================================================================== */
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  z-index: 4;
+}
+
+.scroll-caption {
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  color: var(--color-muted);
+  text-transform: uppercase;
+}
+
+.scroll-line-track {
+  width: 1px;
+  height: 38px;
+  background: rgba(233, 201, 154, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-line-pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 16px;
+  background: var(--color-amber);
+  animation: scrollDrop 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes scrollDrop {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(240%);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   7. ACCESSIBILITY & PREFERS-REDUCED-MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .hero-video-element {
+    display: none !important;
+  }
+
+  .hero-video-poster-fallback {
+    opacity: 0.48 !important;
+    display: block !important;
+  }
+
+  .scroll-line-pulse {
+    animation: none !important;
+    opacity: 0.5;
+  }
+
+  .hero-title, .hero-description, .hero-actions {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   8. RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  .hero-visual-wrapper {
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .line-center {
+    display: none;
+  }
+
+  .hero-coords-marker {
+    display: none;
+  }
+
+  .hero-cinematic-controls {
+    bottom: 4.5rem;
+    right: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-btn-main, .hero-btn-sub {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .hero-craft-notes {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .craft-note-divider {
+    display: none;
+  }
+
+  .hero-cinematic-controls {
+    display: none;
+  }
+}

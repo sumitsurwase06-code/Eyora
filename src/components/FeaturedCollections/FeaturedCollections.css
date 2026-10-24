@@ -1,0 +1,225 @@
+.collections-section {
+  position: relative;
+  background-color: var(--color-surface-dark);
+  padding: clamp(5rem, 8vw, 8rem) 0;
+  border-top: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle);
+  overflow: hidden;
+}
+
+.collections-ambient-glow {
+  position: absolute;
+  top: 30%;
+  left: 20%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(185, 111, 63, 0.12) 0%, transparent 60%);
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+/* Header */
+.collections-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2.5rem;
+  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+  flex-wrap: wrap;
+}
+
+.collections-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.collections-section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4.5vw, 4rem);
+  color: var(--color-champagne);
+  line-height: 1.1;
+}
+
+.collections-header-right {
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.collections-intro-text {
+  font-size: 0.95rem;
+  color: var(--color-text-soft);
+  line-height: 1.65;
+}
+
+/* Asymmetric Grid */
+.collections-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+}
+
+.collections-column-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Base Collection Card */
+.collection-card {
+  position: relative;
+  background-color: var(--color-surface-card);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.collection-card:hover {
+  border-color: var(--color-champagne);
+  box-shadow: 0 16px 40px rgba(15, 8, 6, 0.5);
+}
+
+.collection-card-media {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.collection-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.collection-card:hover .collection-img {
+  transform: scale(1.05);
+}
+
+.collection-img-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(25, 14, 11, 0.88) 100%);
+  pointer-events: none;
+}
+
+.collection-img-gradient--horizontal {
+  background: linear-gradient(90deg, rgba(25, 14, 11, 0.92) 0%, rgba(25, 14, 11, 0.6) 50%, transparent 100%);
+}
+
+.collection-card-body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.collection-card-tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-amber);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.collection-card-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+  color: var(--color-champagne);
+  font-weight: 400;
+  margin-bottom: 0.4rem;
+}
+
+.collection-card-subtitle {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  font-weight: 300;
+  margin-bottom: 0.75rem;
+}
+
+.collection-card-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-soft);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+/* Card Sizing Variants */
+.collection-card--large {
+  display: flex;
+  flex-direction: column;
+}
+
+.collection-card--large .collection-card-media {
+  aspect-ratio: 4/3;
+}
+
+.collection-card--large .collection-card-body {
+  padding: 2.2rem;
+  background: var(--color-surface-card);
+  flex-grow: 1;
+}
+
+.collection-card--medium {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  align-items: center;
+}
+
+.collection-card--medium .collection-card-media {
+  height: 100%;
+  aspect-ratio: 1;
+}
+
+.collection-card--medium .collection-card-body {
+  padding: 1.8rem;
+}
+
+.collection-card--wide {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  align-items: center;
+}
+
+.collection-card--wide .collection-card-media {
+  aspect-ratio: 21/9;
+}
+
+.collection-card--wide .collection-card-body {
+  padding: 2.5rem;
+}
+
+.collection-btn {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .collections-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-card--wide {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-card--wide .collection-card-media {
+    aspect-ratio: 16/9;
+  }
+}
+
+@media (max-width: 640px) {
+  .collection-card--medium {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-card--medium .collection-card-media {
+    aspect-ratio: 16/10;
+  }
+}
