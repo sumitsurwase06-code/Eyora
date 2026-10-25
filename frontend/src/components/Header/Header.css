@@ -9,8 +9,10 @@
 }
 
 .site-header--transparent {
-  background-color: transparent;
-  border-bottom: 1px solid rgba(233, 201, 154, 0.12);
+  background: linear-gradient(180deg, rgba(24, 15, 12, 0.72) 0%, rgba(24, 15, 12, 0.25) 75%, transparent 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(233, 201, 154, 0.14);
 }
 
 .site-header--solid {

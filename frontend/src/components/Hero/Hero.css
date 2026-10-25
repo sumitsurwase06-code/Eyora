@@ -1,0 +1,534 @@
+/* ==========================================================================
+   EYORA — FULL-BLEED CINEMATIC HERO SECTION
+   Haute Lunetterie Campaign Film Background
+   ========================================================================== */
+
+.hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: var(--color-dark-brown);
+  padding-top: calc(var(--header-height) + 1rem);
+  padding-bottom: 4rem;
+}
+
+/* ==========================================================================
+   1. FULL-BLEED EDGE-TO-EDGE VIDEO LAYER
+   ========================================================================== */
+.hero-fullbleed-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 45%;
+  z-index: -2;
+  opacity: 0;
+  transform: scale(1.02);
+  filter: saturate(1.12) brightness(0.96) contrast(1.06);
+  transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 8s ease-out;
+}
+
+.hero-fullbleed-video.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Static Poster Fallback (active while buffering, on error, or reduced motion) */
+.hero-poster-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center 45%;
+  z-index: -3;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  filter: saturate(1.1) brightness(0.88);
+}
+
+.hero-poster-fallback.is-active {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   2. MULTI-LAYERED EDITORIAL READABILITY OVERLAYS
+   ========================================================================== */
+.hero-editorial-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    /* Horizontal readability gradient: darker on left for text, vibrant on right for eyewear */
+    linear-gradient(
+      90deg,
+      rgba(41, 27, 23, 0.86) 0%,
+      rgba(41, 27, 23, 0.65) 36%,
+      rgba(41, 27, 23, 0.30) 68%,
+      rgba(41, 27, 23, 0.10) 100%
+    ),
+    /* Vertical vignette: gentle shadow under fixed header, soft transition into next section */
+    linear-gradient(
+      180deg,
+      rgba(25, 14, 11, 0.55) 0%,
+      transparent 28%,
+      rgba(25, 14, 11, 0.75) 100%
+    );
+  z-index: -1;
+  pointer-events: none;
+}
+
+.hero-amber-highlight-sweep {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 75% 45%, rgba(217, 145, 75, 0.22) 0%, rgba(185, 111, 63, 0.08) 45%, transparent 70%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.hero-ambient-glow {
+  position: absolute;
+  width: 50vw;
+  height: 50vw;
+  left: -10vw;
+  bottom: -5vw;
+  background: radial-gradient(circle, rgba(128, 88, 61, 0.22) 0%, transparent 65%);
+  filter: blur(65px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Decorative Editorial Hairline Lines */
+.hero-grid-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.grid-line {
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(233, 201, 154, 0.02) 0%, rgba(233, 201, 154, 0.1) 40%, rgba(233, 201, 154, 0.02) 100%);
+}
+
+.line-center {
+  margin-left: auto;
+  margin-right: 45%;
+}
+
+/* ==========================================================================
+   3. EDITORIAL CONTENT LAYOUT (LEFT COMPOSITION)
+   ========================================================================== */
+.hero-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.hero-editorial-content {
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-editorial-content.media-loading {
+  opacity: 0.95;
+}
+
+.hero-editorial-content.media-ready {
+  opacity: 1;
+}
+
+.hero-eyebrow-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.hero-edition-marker {
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  color: var(--color-muted);
+  font-weight: 500;
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--color-border-subtle);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 6.5vw, 6.8rem);
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--color-champagne);
+  display: flex;
+  flex-direction: column;
+  text-shadow: 0 4px 35px rgba(0, 0, 0, 0.7);
+}
+
+.hero-title-italic {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--color-warm-white);
+  letter-spacing: 0.02em;
+}
+
+.hero-separator {
+  width: 72px;
+  height: 1px;
+  background-color: var(--color-amber);
+  margin: 1.75rem 0 1.5rem;
+  opacity: 0.9;
+}
+
+.hero-description {
+  max-width: 560px;
+  font-size: clamp(1rem, 1.18vw, 1.15rem);
+  color: var(--color-text-soft);
+  line-height: 1.75;
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 3.5rem;
+}
+
+.hero-btn-main {
+  min-width: 250px;
+  box-shadow: 0 4px 20px rgba(217, 145, 75, 0.35);
+}
+
+.hero-btn-sub {
+  min-width: 200px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Editorial Craft Notes */
+.hero-craft-notes {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--color-border-subtle);
+  max-width: 560px;
+}
+
+.craft-note-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.craft-icon {
+  color: var(--color-amber);
+  flex-shrink: 0;
+}
+
+.craft-note-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.craft-note-title {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--color-champagne);
+  font-weight: 600;
+}
+
+.craft-note-desc {
+  font-size: 0.72rem;
+  color: var(--color-muted);
+}
+
+.craft-note-divider {
+  width: 1px;
+  height: 32px;
+  background-color: var(--color-border-subtle);
+}
+
+/* ==========================================================================
+   4. DISCREET AMBIENT VIDEO CONTROLS (BOTTOM RIGHT)
+   ========================================================================== */
+.hero-cinematic-controls {
+  position: absolute;
+  bottom: 2.5rem;
+  right: clamp(1.5rem, 4vw, 4rem);
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: rgba(35, 22, 18, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-border);
+  padding: 0.5rem 0.9rem;
+  z-index: 10;
+  box-shadow: 0 10px 30px rgba(12, 6, 4, 0.6);
+  border-radius: 4px;
+}
+
+.cinematic-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: var(--color-champagne);
+  font-weight: 500;
+  padding-right: 0.75rem;
+  border-right: 1px solid var(--color-border-subtle);
+}
+
+.tag-icon {
+  color: var(--color-amber);
+}
+
+.controls-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cinematic-ctrl-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(233, 201, 154, 0.08);
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-ivory);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.cinematic-ctrl-btn:hover {
+  background: rgba(217, 145, 75, 0.3);
+  border-color: var(--color-amber);
+  color: var(--color-champagne);
+}
+
+/* ==========================================================================
+   5. SCROLL INDICATOR
+   ========================================================================== */
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  z-index: 4;
+}
+
+.scroll-caption {
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.scroll-line-track {
+  width: 1px;
+  height: 38px;
+  background: rgba(233, 201, 154, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-line-pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 16px;
+  background: var(--color-amber);
+  animation: scrollDrop 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes scrollDrop {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(240%);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   6. ACCESSIBILITY & PREFERS-REDUCED-MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .hero-fullbleed-video {
+    display: none !important;
+  }
+
+  .hero-poster-fallback {
+    opacity: 1 !important;
+  }
+
+  .scroll-line-pulse {
+    animation: none !important;
+    opacity: 0.5;
+  }
+
+  .hero-title, .hero-description, .hero-actions {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   7. RESPONSIVE DESIGN (DESKTOP 1440px, TABLET 768px, MOBILE 375px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .hero-section {
+    padding-top: calc(var(--header-height) + 2rem);
+    padding-bottom: 5rem;
+  }
+
+  .hero-editorial-content {
+    max-width: 600px;
+  }
+
+  .line-center {
+    display: none;
+  }
+
+  .hero-cinematic-controls {
+    bottom: 2rem;
+    right: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: 100svh;
+    align-items: center;
+  }
+
+  .hero-editorial-overlay {
+    background:
+      /* Richer vertical & horizontal scrim on tablet */
+      linear-gradient(
+        90deg,
+        rgba(41, 27, 23, 0.90) 0%,
+        rgba(41, 27, 23, 0.72) 60%,
+        rgba(41, 27, 23, 0.45) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(25, 14, 11, 0.65) 0%,
+        transparent 35%,
+        rgba(25, 14, 11, 0.85) 100%
+      );
+  }
+
+  .hero-editorial-content {
+    max-width: 100%;
+  }
+
+  .hero-title {
+    font-size: clamp(2.8rem, 8vw, 4.2rem);
+  }
+
+  .hero-scroll-indicator {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-section {
+    padding-top: calc(var(--header-height) + 1.25rem);
+    padding-bottom: 3.5rem;
+    min-height: 100svh;
+  }
+
+  .hero-fullbleed-video {
+    object-position: center 35%;
+  }
+
+  .hero-editorial-overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(25, 14, 11, 0.75) 0%,
+        rgba(41, 27, 23, 0.82) 50%,
+        rgba(25, 14, 11, 0.92) 100%
+      );
+  }
+
+  .hero-title {
+    font-size: clamp(2.4rem, 11vw, 3.4rem);
+  }
+
+  .hero-description {
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-btn-main, .hero-btn-sub {
+    width: 100%;
+    min-width: unset;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .hero-craft-notes {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .craft-note-divider {
+    display: none;
+  }
+
+  .hero-cinematic-controls {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.35rem 0.65rem;
+  }
+
+  .cinematic-tag span {
+    display: none;
+  }
+
+  .cinematic-tag {
+    padding-right: 0.4rem;
+  }
+}

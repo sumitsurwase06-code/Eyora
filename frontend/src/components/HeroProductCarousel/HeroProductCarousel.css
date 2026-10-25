@@ -1,0 +1,825 @@
+/* ==========================================================================
+   EYORA — HERO PRODUCT CAROUSEL (CINEMATIC PRODUCT TRANSITIONS)
+   Atmospheric luxury motion stage for handcrafted haute lunetterie
+   ========================================================================== */
+
+.hero-product-carousel {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  z-index: 10;
+  user-select: none;
+}
+
+/* 1. Dynamic Ambient Radial Lighting */
+.carousel-ambient-glow {
+  position: absolute;
+  top: -15%;
+  right: -10%;
+  width: 120%;
+  height: 120%;
+  filter: blur(55px);
+  pointer-events: none;
+  z-index: 1;
+  transition: background 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   2. MAIN SHOWCASE STAGE
+   ========================================================================== */
+.carousel-main-stage {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(145deg, rgba(38, 24, 20, 0.92) 0%, rgba(25, 15, 12, 0.96) 100%);
+  border: 1px solid var(--color-border);
+  box-shadow: 
+    0 30px 70px rgba(12, 6, 4, 0.7),
+    0 0 50px rgba(217, 145, 75, 0.12),
+    inset 0 1px 0 rgba(233, 201, 154, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 1.75rem 2rem 2rem;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.carousel-main-stage:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: 
+    0 35px 80px rgba(12, 6, 4, 0.8),
+    0 0 60px rgba(217, 145, 75, 0.2),
+    inset 0 1px 0 rgba(233, 201, 154, 0.3);
+}
+
+/* Top Origin & Coordinate Header */
+.carousel-stage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.carousel-atelier-origin {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  color: var(--color-muted);
+  text-transform: uppercase;
+}
+
+.origin-icon {
+  color: var(--color-amber);
+  flex-shrink: 0;
+}
+
+.carousel-edition-tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.24em;
+  color: var(--color-champagne);
+  font-weight: 600;
+}
+
+/* Product Display Area */
+.carousel-product-display {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  max-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 50%, rgba(46, 29, 24, 0.7) 0%, rgba(24, 15, 12, 0.9) 80%);
+  border: 1px solid var(--color-border-subtle);
+  overflow: hidden;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.45);
+}
+
+.product-visual-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-visual-wrapper.is-shifting {
+  opacity: 0.25;
+  transform: scale(0.96) translateX(15px);
+}
+
+.carousel-image-anchor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem;
+  cursor: pointer;
+}
+
+.carousel-product-image {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.65)) drop-shadow(0 5px 12px rgba(217, 145, 75, 0.15));
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+}
+
+.carousel-main-stage:hover .carousel-product-image {
+  transform: scale(1.05);
+  filter: drop-shadow(0 25px 40px rgba(0, 0, 0, 0.75)) drop-shadow(0 8px 20px rgba(217, 145, 75, 0.25));
+}
+
+/* Specular Light Sweep Effect Across Lenses */
+.carousel-light-sweep {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.04) 40%,
+    rgba(233, 201, 154, 0.15) 50%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+  animation: lensSweep 5s infinite;
+}
+
+@keyframes lensSweep {
+  0% {
+    left: -100%;
+  }
+  30% {
+    left: 200%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+/* Micro Status Badge Cluster */
+.carousel-badge-cluster {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 3;
+}
+
+.carousel-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(30, 18, 14, 0.88);
+  border: 1px solid var(--color-border);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  color: var(--color-champagne);
+  font-weight: 600;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.badge-sparkle-icon {
+  color: var(--color-amber);
+}
+
+/* Floating Quick Actions */
+.carousel-quick-actions {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 4;
+}
+
+.carousel-action-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(35, 22, 18, 0.85);
+  border: 1px solid var(--color-border);
+  color: var(--color-ivory);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 16px rgba(12, 6, 4, 0.4);
+}
+
+.carousel-action-btn:hover {
+  background: rgba(217, 145, 75, 0.25);
+  border-color: var(--color-amber);
+  color: var(--color-champagne);
+  transform: scale(1.08);
+}
+
+.carousel-action-btn.is-active {
+  background: rgba(217, 145, 75, 0.3);
+  border-color: var(--color-amber);
+  color: var(--color-amber);
+}
+
+.carousel-action-btn.is-confirmed {
+  background: rgba(80, 160, 90, 0.3);
+  border-color: #68c078;
+  color: #a8ebb4;
+}
+
+/* ==========================================================================
+   3. ARCHITECTURAL METADATA CARD
+   ========================================================================== */
+.carousel-meta-card {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.carousel-meta-card.is-shifting {
+  opacity: 0.3;
+  transform: translateY(8px);
+}
+
+.meta-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.meta-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.meta-shape-category {
+  font-size: 0.65rem;
+  letter-spacing: 0.24em;
+  color: var(--color-amber);
+  font-weight: 600;
+}
+
+.meta-frame-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+  font-weight: 300;
+  color: var(--color-champagne);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.meta-frame-title a {
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.meta-frame-title a:hover {
+  color: var(--color-warm-white);
+}
+
+.meta-price-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+}
+
+.meta-price-current {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--color-champagne);
+  letter-spacing: 0.02em;
+}
+
+.meta-price-original {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  text-decoration: line-through;
+}
+
+.meta-material-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-soft);
+  line-height: 1.65;
+  font-weight: 300;
+  max-width: 580px;
+}
+
+/* Color Swatches */
+.meta-swatches-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 0.5rem;
+}
+
+.swatches-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+.swatches-group {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.meta-swatch-item {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  padding: 2px;
+  border: 1px solid var(--color-border-subtle);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.meta-swatch-item:hover {
+  border-color: var(--color-amber);
+  transform: scale(1.12);
+}
+
+.meta-swatch-item.is-active {
+  border-color: var(--color-champagne);
+  box-shadow: 0 0 10px rgba(217, 145, 75, 0.45);
+}
+
+.swatch-color-pill {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: block;
+}
+
+.swatch-name-display {
+  font-size: 0.72rem;
+  color: var(--color-text-soft);
+  font-style: italic;
+  padding-left: 0.5rem;
+}
+
+/* Specifications Grid */
+.meta-specifications-grid {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.9rem 1.25rem;
+  background: rgba(20, 12, 10, 0.65);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.meta-spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.spec-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+.spec-value {
+  font-size: 0.8rem;
+  color: var(--color-champagne);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.meta-spec-divider {
+  width: 1px;
+  height: 24px;
+  background-color: var(--color-border-subtle);
+}
+
+/* Bottom Card Actions */
+.meta-actions-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 0.5rem;
+}
+
+.meta-explore-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  background: var(--color-amber);
+  color: var(--color-surface-obsidian);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  padding: 0.95rem 1.5rem;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(217, 145, 75, 0.25);
+}
+
+.meta-explore-btn:hover {
+  background: var(--color-champagne);
+  box-shadow: 0 8px 25px rgba(233, 201, 154, 0.35);
+  transform: translateY(-1px);
+}
+
+.meta-bag-quick-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(233, 201, 154, 0.08);
+  border: 1px solid var(--color-border);
+  color: var(--color-champagne);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+  padding: 0.95rem 1.4rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.meta-bag-quick-btn:hover {
+  background: rgba(217, 145, 75, 0.2);
+  border-color: var(--color-amber);
+  color: var(--color-warm-white);
+}
+
+/* Framing Corner Ornaments */
+.stage-corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--color-champagne);
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+.corner-tl {
+  top: 6px;
+  left: 6px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+
+.corner-tr {
+  top: 6px;
+  right: 6px;
+  border-top: 2px solid;
+  border-right: 2px solid;
+}
+
+.corner-bl {
+  bottom: 6px;
+  left: 6px;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+}
+
+.corner-br {
+  bottom: 6px;
+  right: 6px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+
+/* ==========================================================================
+   4. CINEMATIC HORIZONTAL TRACK & NAVIGATION
+   ========================================================================== */
+.carousel-navigation-section {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* Playback Header & Timer Bar */
+.carousel-playback-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.playback-timer-bar {
+  flex: 1;
+  height: 2px;
+  background: rgba(233, 201, 154, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.playback-timer-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--color-amber);
+  box-shadow: 0 0 8px rgba(217, 145, 75, 0.6);
+  transition: width 0.05s linear;
+}
+
+.playback-controls-cluster {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.playback-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(35, 22, 18, 0.85);
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-ivory);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.playback-btn:hover {
+  background: rgba(217, 145, 75, 0.25);
+  border-color: var(--color-amber);
+  color: var(--color-champagne);
+}
+
+.playback-counter {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--color-muted);
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.counter-current {
+  color: var(--color-champagne);
+  font-weight: 400;
+}
+
+.counter-divider {
+  opacity: 0.4;
+  font-size: 0.85rem;
+}
+
+.counter-total {
+  font-size: 0.85rem;
+}
+
+.playback-arrows {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.playback-arrow-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(35, 22, 18, 0.85);
+  border: 1px solid var(--color-border);
+  color: var(--color-champagne);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.playback-arrow-btn:hover {
+  background: rgba(217, 145, 75, 0.3);
+  border-color: var(--color-amber);
+  transform: scale(1.08);
+}
+
+/* Horizontal Seamless Scrolling Product Cards Track */
+.carousel-track-container {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 0.5rem 0.25rem 0.75rem;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  cursor: grab;
+}
+
+.carousel-track-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.carousel-track-container:active {
+  cursor: grabbing;
+}
+
+/* Individual Thumbnail Card in Horizontal Strip */
+.carousel-thumb-card {
+  flex: 0 0 clamp(160px, 22vw, 200px);
+  background: rgba(30, 18, 14, 0.85);
+  border: 1px solid var(--color-border-subtle);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.carousel-thumb-card:hover {
+  border-color: var(--color-border);
+  background: rgba(42, 26, 21, 0.95);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(12, 6, 4, 0.5);
+}
+
+.carousel-thumb-card.is-active {
+  border-color: var(--color-amber);
+  background: rgba(46, 28, 22, 0.98);
+  box-shadow: 0 10px 25px rgba(12, 6, 4, 0.6), 0 0 20px rgba(217, 145, 75, 0.18);
+  transform: translateY(-4px);
+}
+
+.thumb-image-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: radial-gradient(circle at 50% 50%, rgba(46, 29, 24, 0.6) 0%, rgba(20, 12, 10, 0.8) 80%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid rgba(233, 201, 154, 0.08);
+}
+
+.thumb-image {
+  max-width: 85%;
+  max-height: 85%;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+.carousel-thumb-card:hover .thumb-image {
+  transform: scale(1.08);
+}
+
+.thumb-active-halo {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--color-amber);
+  pointer-events: none;
+}
+
+.thumb-info-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.thumb-index-badge {
+  font-family: monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--color-muted);
+}
+
+.carousel-thumb-card.is-active .thumb-index-badge {
+  color: var(--color-amber);
+}
+
+.thumb-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--color-champagne);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+}
+
+.thumb-material {
+  font-size: 0.68rem;
+  color: var(--color-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.thumb-price {
+  font-size: 0.78rem;
+  color: var(--color-text-soft);
+  font-weight: 500;
+  margin-top: 0.2rem;
+}
+
+.thumb-active-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-amber);
+  box-shadow: 0 0 8px rgba(217, 145, 75, 0.8);
+}
+
+/* ==========================================================================
+   5. RESPONSIVE DESIGN & ADAPTATIONS
+   ========================================================================== */
+@media (max-width: 768px) {
+  .carousel-main-stage {
+    padding: 1.25rem 1rem 1.5rem;
+  }
+
+  .meta-card-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .meta-price-block {
+    align-items: flex-start;
+  }
+
+  .meta-specifications-grid {
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .meta-spec-divider {
+    display: none;
+  }
+
+  .meta-actions-bar {
+    flex-direction: column;
+  }
+
+  .meta-explore-btn,
+  .meta-bag-quick-btn {
+    width: 100%;
+  }
+
+  .carousel-thumb-card {
+    flex: 0 0 150px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-light-sweep {
+    animation: none !important;
+    display: none !important;
+  }
+
+  .carousel-main-stage {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .product-visual-wrapper,
+  .carousel-meta-card {
+    transition: none !important;
+    transform: none !important;
+  }
+}
